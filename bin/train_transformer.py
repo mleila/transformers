@@ -1,4 +1,12 @@
 #!/bin/env/python
+'''
+python bin/train_transformer.py \
+    --data-dir datat_store \
+    --batch-size 128 \
+    --max-epochs 5 \
+    --gpus 2 \
+    --accelerator ddp
+'''
 from argparse import ArgumentParser
 
 import torch
