@@ -4,7 +4,7 @@ import os
 from distutils.core import setup
 
 BIN = 'bin'
-PACKAGE_NAME = ''
+PACKAGE_NAME = 'transformers'
 PACKAGES = []
 VERSION = 0.01
 MAINTAINER='Mohamed Leila',
