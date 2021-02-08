@@ -11,7 +11,7 @@ class LitModel(pl.LightningModule):
 
     def __init__(self, model, padding_index, learning_rate, batch_size):
         super().__init__()
-        self.save_hyperparameters('learning_rate', 'batch_size')
+        self.save_hyperparameters()
         self.model = model
         self.loss = nn.CrossEntropyLoss(ignore_index=padding_index)
 
