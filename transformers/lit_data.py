@@ -1,10 +1,12 @@
 '''torch lightning data modules. Each module correspond to a dataset'''
 import os
 from argparse import ArgumentParser
+from pydantic.errors import DataclassTypeError
 
 import spacy
 import pandas as pd
 
+import torch
 import torchtext
 from torchtext.datasets import WMT14
 import pytorch_lightning as pl
@@ -167,25 +169,14 @@ class WMT_DataModule(pl.LightningDataModule):
         self.trgt_field.build_vocab(self.train, max_size=self.trgt_vocab_max_size)
 
     def train_dataloader(self):
-        return torchtext.data.BucketIterator(
-            dataset=self.train,
-            batch_size=self.batch_size,
-            sort_key=lambda x: torchtext.data.interleave_keys(len(x.src), len(x.trgt))
-        )
+        return torch.utils.data.DataLoader(dataset=self.train, batch_size=self.batch_size)
 
     def val_dataloader(self):
-        return torchtext.data.BucketIterator(
-            dataset=self.valid,
-            batch_size=self.batch_size,
-            sort_key=lambda x: torchtext.data.interleave_keys(len(x.src), len(x.trgt))
-        )
+        return torch.utils.data.DataLoader(dataset=self.valid, batch_size=self.batch_size)
 
     def test_dataloader(self):
-        return torchtext.data.BucketIterator(
-            dataset=self.test,
-            batch_size=self.batch_size,
-            sort_key=lambda x: torchtext.data.interleave_keys(len(x.src), len(x.trgt))
-        )
+        return torch.utils.data.DataLoader(dataset=self.test, batch_size=self.batch_size)
+
 
     @classmethod
     def from_argparse_args(cls, args):
