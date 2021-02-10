@@ -3,7 +3,7 @@
 python bin/train_transformer.py \
     --data-dir datat_store \
     --batch-size 128 \
-    --max-epochs 5 \
+    --max_epochs 5 \
     --gpus 2 \
     --accelerator ddp
 '''
@@ -35,15 +35,17 @@ def cli_main():
     # data
     # ------------
     dm = WMT_DataModule.from_argparse_args(args)
-    dm.prepare_data()
-    dm.setup()
+    #dm.prepare_data()
+    #dm.setup()
 
     # ------------
     # model
     # ------------
-    target_vocab_size = len(dm.trgt_field.vocab)
+    #target_vocab_size = len(dm.trgt_field.vocab)
+    target_vocab_size = 25252
     backbone = Transformer(num_classes=target_vocab_size, max_output_length=32)
-    padding_index = dm.src_field.vocab.stoi[dm.src_field.pad_token]
+    #padding_index = dm.src_field.vocab.stoi[dm.src_field.pad_token]
+    padding_index = 1
     model = LitModel(backbone, padding_index, args.learning_rate, args.batch_size)
 
     # ------------
