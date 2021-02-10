@@ -169,10 +169,17 @@ class WMT_DataModule(pl.LightningDataModule):
         self.trgt_field.build_vocab(self.train, max_size=self.trgt_vocab_max_size)
 
     def train_dataloader(self):
-        return torch.utils.data.DataLoader(dataset=self.train, batch_size=self.batch_size)
+        return torch.utils.data.DataLoader(
+            dataset=self.train,
+            batch_size=self.batch_size,
+            num_workers=8)
 
     def val_dataloader(self):
-        return torch.utils.data.DataLoader(dataset=self.valid, batch_size=self.batch_size)
+        return torch.utils.data.DataLoader(
+            dataset=self.valid,
+            batch_size=self.batch_size,
+            num_workers=8
+            )
 
     def test_dataloader(self):
         return torch.utils.data.DataLoader(dataset=self.test, batch_size=self.batch_size)
